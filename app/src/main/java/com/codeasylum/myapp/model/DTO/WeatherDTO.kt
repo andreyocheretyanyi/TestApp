@@ -1,5 +1,6 @@
 package com.codeasylum.myapp.model.DTO
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
 
 data class WeatherDTO(
@@ -23,7 +24,7 @@ data class WeatherDTO(
     val weather: List<Weather>,
     @SerializedName("wind")
     val wind: Wind
-)
+) : RealmObject()
 
 data class Coord(
     @SerializedName("lat")

@@ -1,6 +1,7 @@
 package com.codeasylum.myapp.di.component
 
 import com.codeasylum.myapp.MyApplication
+import com.codeasylum.myapp.di.module.RealmModule
 import com.codeasylum.myapp.di.module.RestApiModule
 import com.codeasylum.myapp.di.module.ViewModelModule
 import com.codeasylum.myapp.model.repository.weather.WeatherApiRepo
@@ -13,13 +14,14 @@ import dagger.Component
 @Component(
     modules = [
         ViewModelModule::class,
-        RestApiModule::class]
+        RestApiModule::class,
+        RealmModule::class]
 )
 interface ApplicationComponent {
 
     fun weatherApiRepo(): WeatherApiRepo
-    fun weatherDBRepo() : WeatherDBRepo
-    fun weatherCache() : WeatherCacheRepo
+    fun weatherDBRepo(): WeatherDBRepo
+    fun weatherCache(): WeatherCacheRepo
 
     fun inject(myApplication: MyApplication)
     fun inject(baseFragment: BaseFragment)

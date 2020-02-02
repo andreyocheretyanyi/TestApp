@@ -7,7 +7,6 @@ import com.codeasylum.myapp.model.repository.weather.WeatherCacheRepo
 import com.codeasylum.myapp.model.repository.weather.WeatherDBRepo
 import com.codeasylum.myapp.model.repository.weather.WeatherRepo
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -23,10 +22,18 @@ class WeatherManager @Inject constructor(
         city: String,
         countryCode: String,
         networkAvailable: Boolean
-    ): Flowable<WeatherDTO> = (if (networkAvailable)
-        weatherApiRepo.getWeatherByCityAndCountryCode(city, countryCode, networkAvailable)
-    else
-        weatherCacheRepo.getWeatherByCityAndCountryCode(city, countryCode, networkAvailable))
+    ): Flowable<WeatherDTO> = (
+            if (networkAvailable) weatherApiRepo.getWeatherByCityAndCountryCode(
+                city,
+                countryCode,
+                networkAvailable
+            )
+            else
+                weatherCacheRepo.getWeatherByCityAndCountryCode(
+                    city,
+                    countryCode,
+                    networkAvailable
+                ))
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
