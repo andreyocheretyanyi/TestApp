@@ -1,6 +1,7 @@
 package com.codeasylum.myapp.di.component
 
 import com.codeasylum.myapp.MyApplication
+import com.codeasylum.myapp.di.module.AppModule
 import com.codeasylum.myapp.di.module.RealmModule
 import com.codeasylum.myapp.di.module.RestApiModule
 import com.codeasylum.myapp.di.module.ViewModelModule
@@ -13,6 +14,7 @@ import dagger.Component
 @ApplicationScope
 @Component(
     modules = [
+        AppModule::class,
         ViewModelModule::class,
         RestApiModule::class,
         RealmModule::class]

@@ -32,9 +32,7 @@ class WeatherApiRepo @Inject constructor(
                 "$city,$countryCode",
                 API_KEY
             ))
-        .doOnNext {
-            weatherCacheRepo.saveResultToCache(city, countryCode, it)
-        }
+
 
 }
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.codeasylum.myapp.di.component.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Provider
-import javax.inject.Singleton
 
 @ApplicationScope
 class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) :

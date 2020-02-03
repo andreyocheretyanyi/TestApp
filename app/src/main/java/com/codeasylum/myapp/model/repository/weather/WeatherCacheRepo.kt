@@ -7,13 +7,13 @@ import javax.inject.Inject
 
 @ApplicationScope
 class WeatherCacheRepo @Inject constructor() :
-    WeatherRepo {
+    WeatherRepo, CanSaveData {
     private val weatherMapCache: HashMap<String, WeatherDTO> = HashMap()
 
     override fun getWeatherByCityAndCountryCode(
         city: String,
         countryCode: String,
-        networkAvailable : Boolean
+        networkAvailable: Boolean
     ): Flowable<WeatherDTO> = weatherMapCache["$city,$countryCode"].let {
         return if (it == null)
             Flowable.empty()
@@ -21,7 +21,11 @@ class WeatherCacheRepo @Inject constructor() :
     }
 
     fun saveResultToCache(city: String, code: String, dto: WeatherDTO) {
-        weatherMapCache["$city,$code"] = dto
+
+    }
+
+    override fun saveWeatherDto(city: String, code: String, weatherDTO: WeatherDTO) {
+        weatherMapCache["$city,$code"] = weatherDTO
     }
 
 }
