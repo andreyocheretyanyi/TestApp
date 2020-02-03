@@ -30,10 +30,12 @@ class MainScreenViewModel @Inject constructor(
                 addDefault = true
             )
                 .doOnError { error.postValue(it.toString()) }
-                .subscribe { it ->
+                .subscribe({ it ->
                     cities.value!!.addAll(it)
                     cities.notifyObserver()
-                }
+                }, {
+                    error.postValue(it.toString())
+                })
         }
     }
 
@@ -46,12 +48,14 @@ class MainScreenViewModel @Inject constructor(
                     arrayListOf(City(this, cityCode.value ?: "")),
                     updateOld = true,
                     addDefault = false
-                ).doOnError { error.postValue(it.toString()) }
-                    .subscribe { it ->
+                )
+                    .subscribe({ it ->
                         cities.value!!.clear()
                         cities.value!!.addAll(it)
                         cities.notifyObserver()
-                    }
+                    }, {
+                        error.postValue(it.toString())
+                    })
             }
         }
 
