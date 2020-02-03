@@ -7,6 +7,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 private const val API_KEY = "2731dd9738886becd90a3e490c0af4aa"
+private const val UNITS_METRIC = "metric"
 
 @ApplicationScope
 class WeatherApiRepo @Inject constructor(
@@ -24,12 +25,15 @@ class WeatherApiRepo @Inject constructor(
         openWeatherApiService
             .getWeatherDataByCityName(
                 city,
+                UNITS_METRIC,
                 API_KEY
+
             )
     else
         openWeatherApiService
             .getWeatherDataByCityName(
                 "$city,$countryCode",
+                UNITS_METRIC,
                 API_KEY
             ))
 
