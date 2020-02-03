@@ -1,11 +1,11 @@
 package com.codeasylum.myapp.model.repository.city
 
 import com.codeasylum.myapp.model.localDto.City
-import io.reactivex.Flowable
+import io.reactivex.Single
 
 interface CityRepo {
 
-    fun getAllCities(): Flowable<List<City>>
+    fun getAllCities(): Single<MutableList<City>>
 
     fun saveCity(city: City)
 }
