@@ -14,7 +14,7 @@ class CityDbRepo @Inject constructor(private val realmConfiguration: RealmConfig
         val realm = Realm.getInstance(realmConfiguration)
         try {
             val realmResult = realm.where(City::class.java).findAll()
-            if (realmResult != null && !realm.isEmpty) {
+            if (realmResult != null) {
                 it.onSuccess(realm.copyFromRealm(realmResult))
             }
         } catch (e: Exception) {

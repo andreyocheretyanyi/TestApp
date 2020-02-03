@@ -17,15 +17,43 @@ class MainScreenViewModel @Inject constructor(
 
 
     val cities = MutableLiveData<ArrayList<City>>(arrayListOf())
+    val cityName = MutableLiveData<String>("")
+    val cityCode = MutableLiveData<String>("")
+    val error = MutableLiveData<String>()
 
     @SuppressLint("CheckResult")
-    fun fetchDataForFirsTwoCity() {
+    fun fetchFirstData() {
         if (cities.value!!.isEmpty()) {
-            dataFacadeImpl.getCity(myApplication.isConnectedToNetwork())
+            dataFacadeImpl.getCities(
+                myApplication.isConnectedToNetwork(), arrayListOf(),
+                updateOld = true,
+                addDefault = true
+            )
+                .doOnError { error.postValue(it.toString()) }
                 .subscribe { it ->
                     cities.value!!.addAll(it)
                     cities.notifyObserver()
                 }
         }
+    }
+
+
+    fun addCityToList() {
+        cityName.value?.apply {
+            if (isNotEmpty()) {
+                dataFacadeImpl.getCities(
+                    myApplication.isConnectedToNetwork(),
+                    arrayListOf(City(this, cityCode.value ?: "")),
+                    updateOld = true,
+                    addDefault = false
+                ).doOnError { error.postValue(it.toString()) }
+                    .subscribe { it ->
+                        cities.value!!.clear()
+                        cities.value!!.addAll(it)
+                        cities.notifyObserver()
+                    }
+            }
+        }
+
     }
 }

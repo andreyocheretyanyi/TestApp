@@ -5,7 +5,12 @@ import io.reactivex.Single
 
 interface DataFacade {
 
-    fun getCity(isConnected: Boolean): Single<MutableList<City>>
+    fun getCities(
+        isConnected: Boolean,
+        cities: MutableList<City>,
+        updateOld: Boolean,
+        addDefault: Boolean
+    ): Single<MutableList<City>>
 
     fun saveCity(city: City)
 }

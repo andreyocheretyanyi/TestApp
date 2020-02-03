@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.codeasylum.myapp.R
 import com.codeasylum.myapp.baseStuff.BaseFragment
@@ -35,7 +37,11 @@ class MainScreenFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainScreenViewModel.fetchDataForFirsTwoCity()
+        mainScreenViewModel.error.observe(viewLifecycleOwner, Observer {
+            if (it != null)
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        })
+        mainScreenViewModel.fetchFirstData()
     }
 
 
