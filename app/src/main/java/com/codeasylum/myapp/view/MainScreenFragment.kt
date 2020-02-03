@@ -1,20 +1,20 @@
 package com.codeasylum.myapp.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.codeasylum.myapp.R
+import com.codeasylum.myapp.baseStuff.BaseFragment
 import com.codeasylum.myapp.databinding.FragmentMainScreenBinding
-import com.codeasylum.myapp.viewmodel.MainScreenFragmentViewModel
+import com.codeasylum.myapp.viewmodel.MainScreenViewModel
 
 
 class MainScreenFragment : BaseFragment() {
 
-    private lateinit var mainScreenFragmentViewModel: MainScreenFragmentViewModel
+    private lateinit var mainScreenViewModel: MainScreenViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +27,15 @@ class MainScreenFragment : BaseFragment() {
             false
         )
         binding.lifecycleOwner = viewLifecycleOwner
-        mainScreenFragmentViewModel =
-            ViewModelProvider(this, viewModelFactory).get(MainScreenFragmentViewModel::class.java)
-        binding.viewModel = mainScreenFragmentViewModel
+        mainScreenViewModel =
+            ViewModelProvider(this, viewModelFactory).get(MainScreenViewModel::class.java)
+        binding.viewModel = mainScreenViewModel
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mainScreenViewModel.fetchDataForFirsTwoCity()
     }
 
 

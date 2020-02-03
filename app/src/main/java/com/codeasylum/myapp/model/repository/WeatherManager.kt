@@ -2,7 +2,10 @@ package com.codeasylum.myapp.model.repository
 
 import com.codeasylum.myapp.di.component.ApplicationScope
 import com.codeasylum.myapp.model.DTO.WeatherDTO
-import com.codeasylum.myapp.model.repository.weather.*
+import com.codeasylum.myapp.model.repository.weather.CanSaveData
+import com.codeasylum.myapp.model.repository.weather.WeatherApiRepo
+import com.codeasylum.myapp.model.repository.weather.WeatherCacheRepo
+import com.codeasylum.myapp.model.repository.weather.WeatherRepo
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -11,7 +14,6 @@ import javax.inject.Inject
 @ApplicationScope
 class WeatherManager @Inject constructor(
     private val weatherApiRepo: WeatherApiRepo,
-    private val weatherDBRepo: WeatherDBRepo,
     private val weatherCacheRepo: WeatherCacheRepo
 ) : WeatherRepo, CanSaveData {
 
@@ -28,7 +30,7 @@ class WeatherManager @Inject constructor(
                 saveWeatherDto(city, countryCode, it)
             }
             else
-                weatherDBRepo.getWeatherByCityAndCountryCode(
+                weatherCacheRepo.getWeatherByCityAndCountryCode(
                     city,
                     countryCode,
                     networkAvailable
@@ -38,7 +40,6 @@ class WeatherManager @Inject constructor(
 
 
     override fun saveWeatherDto(city: String, code: String, weatherDTO: WeatherDTO) {
-        weatherDBRepo.saveWeatherDto(city, code, weatherDTO)
         weatherCacheRepo.saveWeatherDto(city, code, weatherDTO)
     }
 

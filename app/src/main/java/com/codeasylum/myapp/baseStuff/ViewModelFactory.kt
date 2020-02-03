@@ -1,4 +1,4 @@
-package com.codeasylum.myapp.viewmodel
+package com.codeasylum.myapp.baseStuff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
